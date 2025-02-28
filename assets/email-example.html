@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Ticket Confirmation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .header {
+            background-color: #1a237e;
+            color: #ffffff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .content {
+            padding: 30px;
+            text-align: center;
+        }
+
+        .ticket-info {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .ticket-detail {
+            margin: 10px 0;
+            font-size: 16px;
+        }
+
+        .movie-name {
+            font-size: 24px;
+            color: #1a237e;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .footer {
+            background-color: #f2f2f2;
+            color: #777777;
+            padding: 20px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .qr-placeholder {
+            width: 200px;
+            height: 200px;
+            background-color: #f2f2f2;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Movie Ticket Confirmation</h1>
+        </div>
+        <div class="content">
+            <p>Thank you for your purchase! Here are your ticket details:</p>
+
+            <div class="ticket-info">
+                <div class="movie-name">Example Movie</div>
+                <div class="ticket-detail"><strong>Date:</strong> 1 Ocak 2026</div>
+                <div class="ticket-detail"><strong>Time:</strong> 14:00-16:00</div>
+            </div>
+
+            <div class="qr-placeholder">
+                <img src="data:image/png;base64,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"
+                    alt="Ticket QR Code" style="width: 200px; height: 200px; display: block; margin: 0 auto;" />
+            </div>
+
+            <p>Please show this email or your QR code at the cinema entrance.</p>
+            <p>Enjoy your movie! 🎬</p>
+        </div>
+        <div class="footer">
+            <p>This is an automated confirmation email. Please do not reply.</p>
+            <p>For any questions, please contact our support team.</p>
+        </div>
+    </div>
+</body>
+
+</html>

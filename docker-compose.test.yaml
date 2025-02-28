@@ -1,0 +1,23 @@
+name: movie-management-assignment-test
+services:
+  test-db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: movie-management-test
+    ports:
+      - "5433:5432"
+
+  test-redis:
+    image: redis:6
+    ports:
+      - "6380:6379"
+
+  test-rabbitmq:
+    image: rabbitmq:3-management
+    restart: always
+    ports:
+      - "5673:5672"
+      - "15673:15672" 
