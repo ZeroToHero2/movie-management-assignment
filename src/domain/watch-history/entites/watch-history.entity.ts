@@ -5,8 +5,8 @@ import { Column, CreateDateColumn, UpdateDateColumn, ManyToOne } from 'typeorm';
 
 @Entity('watch-histories')
 export class WatchHistoryEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @ManyToOne(() => UserEntity)
   user: Relation<UserEntity>;

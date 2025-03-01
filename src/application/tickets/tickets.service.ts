@@ -19,6 +19,7 @@ import {
   UserNotOldEnoughError,
   TicketDoesNotBelongToUserError,
   SessionAlreadyPassedError,
+  TicketAlreadyExistsError,
 } from '@domain/exceptions';
 
 @Injectable()
@@ -38,15 +39,19 @@ export class TicketsService {
       relations: { movie: true },
     });
 
-    this.isUserEligibleToBuyTicket(user, session);
+    await this.isUserEligibleToBuyTicket(user, session);
 
     const newTicket = this.ticketRepository.create({ user, session });
     const savedTicket = await this.ticketRepository.save(newTicket);
 
-    await this.rabbitmqService.publish(RABBITMQ_QUEUES.BUY_TICKET.ROUTING_KEY, {
-      userId: user.id,
-      ticketId: savedTicket.id,
-    });
+    await this.rabbitmqService.publish(
+      RABBITMQ_QUEUES.BUY_TICKET.ROUTING_KEY,
+      {
+        userId: user.id,
+        ticketId: savedTicket.id,
+      },
+      RABBITMQ_QUEUES.BUY_TICKET.RETRY_COUNT,
+    );
 
     return savedTicket;
   }
@@ -117,13 +122,21 @@ export class TicketsService {
    * @throws UserNotOldEnoughError - If the user is not old enough to watch the movie.
    * @throws SessionAlreadyPassedError - If the session has already passed.
    */
-  private isUserEligibleToBuyTicket(user: UserEntity, session: SessionEntity) {
+  private async isUserEligibleToBuyTicket(user: UserEntity, session: SessionEntity) {
     if (session.movie.status === Status.INACTIVE) {
       throw new MovieIsNotActiveError();
     }
 
     if (user.age <= session.movie.ageRestriction) {
       throw new UserNotOldEnoughError();
+    }
+
+    const isAlreadyBought = await this.ticketRepository.findOneWithOptions({
+      where: { user: { id: user.id }, session: { id: session.id } },
+    });
+
+    if (isAlreadyBought) {
+      throw new TicketAlreadyExistsError();
     }
 
     this.checkIfSessionHasPassed(session.date, session.timeSlot);

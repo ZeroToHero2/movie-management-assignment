@@ -22,7 +22,10 @@ export class BootstrapAppService {
         age: 25,
         role: Role.MANAGER,
       });
-      this.logger.log('Manager created:', manager);
+      this.logger.log(
+        'Manager created:',
+        JSON.stringify({ id: manager.id, email: manager.email, username: manager.username, age: manager.age, role: manager.role }),
+      );
     }
     const existingUsers = await this.userService.findByRole(Role.CUSTOMER);
 
@@ -34,7 +37,10 @@ export class BootstrapAppService {
         age: 20,
         role: Role.CUSTOMER,
       });
-      this.logger.log('Users created:', users);
+      this.logger.log(
+        'Users created:',
+        JSON.stringify({ id: users.id, email: users.email, username: users.username, age: users.age, role: users.role }),
+      );
     }
 
     this.logger.log('App bootstrap completed successfully!');

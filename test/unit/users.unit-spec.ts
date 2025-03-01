@@ -34,7 +34,7 @@ describe('UsersController', () => {
 
   const mockWatchHistory: WatchHistoryEntity[] = [
     {
-      id: 1,
+      id: '2ae9a304-5212-4a21-a92b-554c5bbd53f2',
       user: mockUser,
       movie: mockMovie,
       watchedAt: new Date(),

@@ -1,8 +1,9 @@
 import { UserEntity } from '@domain/users/entities/user.entity';
 import { SessionEntity } from '@domain/sessions/entities/session.entity';
-import { Entity, Column, UpdateDateColumn, CreateDateColumn, PrimaryGeneratedColumn, ManyToOne, Relation } from 'typeorm';
+import { Entity, Column, UpdateDateColumn, CreateDateColumn, PrimaryGeneratedColumn, ManyToOne, Relation, Unique } from 'typeorm';
 
 @Entity('tickets')
+@Unique(['user', 'session'])
 export class TicketEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
